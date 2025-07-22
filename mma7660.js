@@ -43,7 +43,7 @@ class MMA7660{
       throw new Error("i2cSlave is not open yet.");
     }
 
-    XYZdata = this.i2cSlave.readBytes(3);
+    let XYZdata = this.i2cSlave.readBytes(3);
 
     return XYZdata;
   }
