@@ -10,4 +10,7 @@ await sht40.init();
 
 let data = await sht40.readData();
 
-console.dir(data);
+setInterval(() => {
+    console.dir('湿度：' + data.humidity);
+    console.dir('温度：' + data.temperature);
+}, 1000);
