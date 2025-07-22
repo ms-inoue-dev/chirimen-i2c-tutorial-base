@@ -8,12 +8,12 @@ const i2cPort = i2cAccess.ports.get(1);
 const mma7660 = new MMA7660(i2cPort, 0x4c);
 
 setInterval(async() => {
-    await mma7660.setup();
+    await mma7660.init();
 
     let XYZData = await mma7660.getXYZ();
     let AccelerationData = await mma7660.getAcceleration();
 
     console.dir(XYZData);
-    console.dir(AccelerationData);
+    // console.dir(AccelerationData);
 
 }, 500);
