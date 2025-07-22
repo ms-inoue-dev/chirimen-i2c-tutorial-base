@@ -1,19 +1,19 @@
-import {requestI2CAccess, VL53L0X} from "chirimen";
+import {requestI2CAccess} from "chirimen";
+import {MMA7660} from "./mma7660.js";
 
 const i2cAccess = await requestI2CAccess();
 
 const i2cPort = i2cAccess.ports.get(1);
 
-const vl53l0x = new VL53L0X(i2cPort, 0x29);
+const mma7660 = new MMA7660(i2cPort, 0x4c);
 
-setInterval(() => {
-    getvl53l0xData().then(result => {
-        console.dir(result);
-    });
-}, 1000);
+setInterval(async() => {
+    await mma7660.setup();
 
-async function getvl53l0xData () {
-    await vl53l0x.init();
-    let data = await vl53l0x.getRange();
-    return data;
-}
+    let XYZData = await mma7660.getXYZ();
+    let AccelerationData = await mma7660.getAcceleration();
+
+    console.dir(XYZData);
+    console.dir(AccelerationData);
+
+}, 500);
