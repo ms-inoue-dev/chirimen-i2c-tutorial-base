@@ -26,9 +26,9 @@ class MMA7660{
     const XYZresult = new Int8Array(await this.i2cSlave.readBytes(3));
 
     const XYZdata = {
-      X : (XYZresult[0] << 2) / 4,
-      Y : (XYZresult[1] << 2) / 4,
-      Z : (XYZresult[2] << 2) / 4,
+      "X" : (XYZresult[0] << 2) / 4,
+      "Y" : (XYZresult[1] << 2) / 4,
+      "Z" : (XYZresult[2] << 2) / 4,
     };
 
     return XYZdata;
@@ -42,9 +42,9 @@ class MMA7660{
     const XYZdata = await this.getXYZ();
     
     const AccelerationData = {
-      X : XYZdata[0] / 21.00,
-      Y : XYZdata[0] / 21.00,
-      Z : XYZdata[0] / 21.00,
+      "X" : XYZdata.X / 21.00,
+      "Y" : XYZdata.Y / 21.00,
+      "Z" : XYZdata.Z / 21.00,
     };
 
     return AccelerationData
