@@ -16,6 +16,7 @@ setInterval(async() => {
     console.dir("x =" + XYZData[0]);
     console.dir("y =" + XYZData[1]);
     console.dir("z =" + XYZData[2]);
+
     console.dir("accleration of X/Y/Z: " + AccelerationData[0] + " g/ " + AccelerationData[1] + " g/ " + AccelerationData[2] + " g");
 
 }, 500);
