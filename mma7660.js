@@ -37,9 +37,9 @@ class MMA7660{
   }
   async init(){
     this.i2cSlave = await this.i2cPort.open(this.slaveAddress);
-    setMode(this.i2cSlave, MMA7660_STAND_BY);
-    setSampleRate(this.i2cSlave, AUTO_SLEEP_32);
-    setMode(this.i2cSlave, MMA7660_ACTIVE);
+    this.i2cSlave.write8(MMA7660_MODE, MMA7660_STAND_BY);
+    this.i2cSlave.write8(MMA7660_SR, AUTO_SLEEP_32);
+    this.i2cSlave.write8(MMA7660_MODE, MMA7660_ACTIVE);
   }
   async getXYZ(){
     if (this.i2cSlave == null) {
@@ -48,9 +48,9 @@ class MMA7660{
 
     let XYZdata = this.i2cSlave.readBytes(3);
 
-    // XYZdata[0] = (XYZdata[0] << 2) / 4;
-    // XYZdata[1] = (XYZdata[1] << 2) / 4;
-    // XYZdata[2] = (XYZdata[2] << 2) / 4;
+    XYZdata[0] = (XYZdata[0] << 2) / 4;
+    XYZdata[1] = (XYZdata[1] << 2) / 4;
+    XYZdata[2] = (XYZdata[2] << 2) / 4;
 
     return XYZdata;
   }
@@ -63,11 +63,3 @@ class MMA7660{
   }
 }
 export default MMA7660;
-
-function setMode (i2cSlave, mode) {
-  i2cSlave.write8(MMA7660_MODE, mode);
-}
-
-function setSampleRate (i2cSlave, rate) {
-  i2cSlave.write8(MMA7660_SR, rate);
-}
