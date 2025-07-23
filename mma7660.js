@@ -37,9 +37,9 @@ class MMA7660{
   }
   async init(){
     this.i2cSlave = await this.i2cPort.open(this.slaveAddress);
-    // setMode(this.i2cSlave, MMA7660_STAND_BY);
-    // setSampleRate(this.i2cSlave, AUTO_SLEEP_32);
-    // setMode(this.i2cSlave, MMA7660_ACTIVE);
+    setMode(this.i2cSlave, MMA7660_STAND_BY);
+    setSampleRate(this.i2cSlave, AUTO_SLEEP_32);
+    setMode(this.i2cSlave, MMA7660_ACTIVE);
   }
   async getXYZ(){
     if (this.i2cSlave == null) {
