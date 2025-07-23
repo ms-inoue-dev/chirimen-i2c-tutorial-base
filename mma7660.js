@@ -37,25 +37,20 @@ class MMA7660{
   }
   async init(){
     this.i2cSlave = await this.i2cPort.open(this.slaveAddress);
-    this.i2cSlave.write8(MMA7660_MODE, MMA7660_STAND_BY);
-    this.i2cSlave.write8(MMA7660_SR, AUTO_SLEEP_32);
-    this.i2cSlave.write8(MMA7660_MODE, MMA7660_ACTIVE);
+    await this.i2cSlave.write8(MMA7660_MODE, MMA7660_STAND_BY);
+    await this.i2cSlave.write8(MMA7660_SR, AUTO_SLEEP_32);
+    await this.i2cSlave.write8(MMA7660_MODE, MMA7660_ACTIVE);
   }
   async getXYZ(){
     if (this.i2cSlave == null) {
       throw new Error("i2cSlave is not open yet.");
     }
 
-    // let XYZdata = this.i2cSlave.readBytes(3);
+    let XYZdata = await this.i2cSlave.readBytes(3);
 
-    // XYZdata[0] = (XYZdata[0] << 2) / 4;
-    // XYZdata[1] = (XYZdata[1] << 2) / 4;
-    // XYZdata[2] = (XYZdata[2] << 2) / 4;
-
-    let XYZdata = [];
-    XYZdata[0] = this.i2cSlave.read8(MMA7660_X);
-    XYZdata[1] = this.i2cSlave.read8(MMA7660_Y);
-    XYZdata[2] = this.i2cSlave.read8(MMA7660_Z);
+    XYZdata[0] = (XYZdata[0] << 2) / 4;
+    XYZdata[1] = (XYZdata[1] << 2) / 4;
+    XYZdata[2] = (XYZdata[2] << 2) / 4;
 
     return XYZdata;
   }
