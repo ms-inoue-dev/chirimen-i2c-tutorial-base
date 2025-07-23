@@ -1,4 +1,5 @@
-import {requestI2CAccess, MMA7660} from "chirimen";
+import {requestI2CAccess} from "chirimen";
+import MMA7660 from "@chirimen";
 
 const i2cAccess = await requestI2CAccess();
 
