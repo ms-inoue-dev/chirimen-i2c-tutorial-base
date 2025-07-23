@@ -37,21 +37,20 @@ class MMA7660{
   }
   async init(){
     this.i2cSlave = await this.i2cPort.open(this.slaveAddress);
-    setMode(this.i2cSlave, MMA7660_STAND_BY);
-    setSampleRate(this.i2cSlave, AUTO_SLEEP_32);
-    setMode(this.i2cSlave, MMA7660_ACTIVE);
+    // setMode(this.i2cSlave, MMA7660_STAND_BY);
+    // setSampleRate(this.i2cSlave, AUTO_SLEEP_32);
+    // setMode(this.i2cSlave, MMA7660_ACTIVE);
   }
   async getXYZ(){
     if (this.i2cSlave == null) {
       throw new Error("i2cSlave is not open yet.");
     }
 
-    let val = [64, 64, 64];
     let XYZdata = this.i2cSlave.readBytes(3);
 
-    val[0] = (XYZdata[0] << 2) / 4;
-    val[1] = (XYZdata[1] << 2) / 4;
-    val[2] = (XYZdata[2] << 2) / 4;
+    XYZdata[0] = (XYZdata[0] << 2) / 4;
+    XYZdata[1] = (XYZdata[1] << 2) / 4;
+    XYZdata[2] = (XYZdata[2] << 2) / 4;
 
     return val;
   }
