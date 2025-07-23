@@ -21,7 +21,7 @@ class MMA7660{
       throw new Error("i2cSlave is not open yet.");
     }
 
-    let XYZdata = await this.i2cSlave.readBytes(3);
+    let XYZdata = new Int8Array(await this.i2cSlave.readBytes(3));
 
     XYZdata[0] = (XYZdata[0] << 2) / 4;
     XYZdata[1] = (XYZdata[1] << 2) / 4;
