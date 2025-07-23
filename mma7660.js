@@ -21,11 +21,13 @@ class MMA7660{
       throw new Error("i2cSlave is not open yet.");
     }
 
-    let XYZdata = new Int8Array(await this.i2cSlave.readBytes(3));
+    let XYZresult = new Int8Array(await this.i2cSlave.readBytes(3));
 
-    XYZdata[0] = (XYZdata[0] << 2) / 4;
-    XYZdata[1] = (XYZdata[1] << 2) / 4;
-    XYZdata[2] = (XYZdata[2] << 2) / 4;
+    XYZdata = {
+      "X": (XYZresult[0] << 2) / 4,
+      "Y": (XYZresult[1] << 2) / 4,
+      "Z": (XYZresult[2] << 2) / 4,
+    };
 
     return XYZdata;
   }
@@ -36,10 +38,11 @@ class MMA7660{
 
     let XYZdata = await this.getXYZ();
     
-    let AccelerationData = [];
-    AccelerationData[0] = XYZdata[0] / 21.00;
-    AccelerationData[1] = XYZdata[1] / 21.00;
-    AccelerationData[2] = XYZdata[2] / 21.00; 
+    let AccelerationData = {
+      "X": XYZdata[0] / 21.00,
+      "Y": XYZdata[0] / 21.00,
+      "Z": XYZdata[0] / 21.00,
+    };
 
     return AccelerationData
   }
