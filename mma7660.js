@@ -46,11 +46,16 @@ class MMA7660{
       throw new Error("i2cSlave is not open yet.");
     }
 
-    let XYZdata = this.i2cSlave.readBytes(3);
+    // let XYZdata = this.i2cSlave.readBytes(3);
 
-    XYZdata[0] = (XYZdata[0] << 2) / 4;
-    XYZdata[1] = (XYZdata[1] << 2) / 4;
-    XYZdata[2] = (XYZdata[2] << 2) / 4;
+    // XYZdata[0] = (XYZdata[0] << 2) / 4;
+    // XYZdata[1] = (XYZdata[1] << 2) / 4;
+    // XYZdata[2] = (XYZdata[2] << 2) / 4;
+
+    let XYZdata = [];
+    XYZdata[0] = this.i2cSlave.read8(MMA7660_X);
+    XYZdata[1] = this.i2cSlave.read8(MMA7660_Y);
+    XYZdata[2] = this.i2cSlave.read8(MMA7660_Z);
 
     return XYZdata;
   }
