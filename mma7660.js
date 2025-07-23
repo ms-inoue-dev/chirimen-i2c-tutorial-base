@@ -65,10 +65,10 @@ class MMA7660{
 }
 export default MMA7660;
 
-function setMode (i2cSlave) {
-  i2cSlave.writeByte(MMA7660_MODE);
+function setMode (i2cSlave, mode) {
+  i2cSlave.write8(MMA7660_MODE, mode);
 }
 
-function setSampleRate (i2cSlave) {
-  i2cSlave.writeByte(MMA7660_SR);
+function setSampleRate (i2cSlave, rate) {
+  i2cSlave.write8(MMA7660_SR, rate);
 }
