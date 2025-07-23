@@ -11,9 +11,11 @@ await mma7660.init();
 
 setInterval(async() => {
     let XYZData = await mma7660.getXYZ();
-    let AccelerationData = await mma7660.getAcceleration();
+    let AccelerationData = await mma7660.getAcceleration(XYZData[0], XYZData[1], XYZData[2]);
 
-    console.dir(XYZData);
-    // console.dir(AccelerationData);
+    console.dir("x =" + XYZData[0]);
+    console.dir("y =" + XYZData[1]);
+    console.dir("z =" + XYZData[2]);
+    console.dir("accleration of X/Y/Z: " + AccelerationData[0] + " / " + AccelerationData[1] + " / " + AccelerationData[2]);
 
 }, 500);

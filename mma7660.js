@@ -54,12 +54,17 @@ class MMA7660{
 
     return XYZdata;
   }
-  async getAcceleration(){
+  async getAcceleration(x, y, z){
     if (this.i2cSlave == null) {
       throw new Error("i2cSlave is not open yet.");
     }
 
-    return "call getAcceleration"
+    AccelerationData = [];
+    AccelerationData[0] = x / 21.0;
+    AccelerationData[1] = y / 21.0;
+    AccelerationData[2] = z / 21.0; 
+
+    return AccelerationData
   }
 }
 export default MMA7660;
