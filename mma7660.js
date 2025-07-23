@@ -34,7 +34,7 @@ class MMA7660{
       throw new Error("i2cSlave is not open yet.");
     }
 
-    let XYZdata = await getXYZ();
+    let XYZdata = await this.getXYZ();
     
     let AccelerationData = [];
     AccelerationData[0] = XYZdata[0] / 21.00;
