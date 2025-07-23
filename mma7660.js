@@ -52,7 +52,7 @@ class MMA7660{
     XYZdata[1] = (XYZdata[1] << 2) / 4;
     XYZdata[2] = (XYZdata[2] << 2) / 4;
 
-    return val;
+    return XYZdata;
   }
   async getAcceleration(){
     if (this.i2cSlave == null) {
