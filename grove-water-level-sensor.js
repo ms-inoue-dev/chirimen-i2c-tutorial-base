@@ -22,7 +22,7 @@ class WaterLevelSensor {
       throw new Error("i2cSlave is not open yet.");
     }
 
-    const high12SectionValue = await this.i2cSlave.read16(ATTINY1_HIGH_ADDR);
+    const high12SectionValue = await this.i2cSlave.readBytes(12);
 
     return high12SectionValue;
   }
@@ -32,7 +32,7 @@ class WaterLevelSensor {
       throw new Error("i2cSlave is not open yet.");
     }
 
-    const low8SectionValue = await this.i2cSlave.read8(ATTINY2_LOW_ADDR);
+    const low8SectionValue = await this.i2cSlave.readBytes(8);
 
     return low8SectionValue;
   }
