@@ -1,6 +1,6 @@
 // @ts-check
-// MMA7660 driver for CHIRIMEN
-// Based from https://github.com/Seeed-Studio/Accelerometer_MMA7660/blob/master/MMA7660.cpp
+// grove-water-level-sensor driver for CHIRIMEN
+// Based from https://github.com/SeeedDocument/Grove-Water-Level-Sensor/blob/master/water-level-sensor-demo.ino
 // Programmed by Masahito Inoue
 
 const THRESHOLD = 100;

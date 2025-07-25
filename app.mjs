@@ -1,5 +1,5 @@
 import {requestI2CAccess} from "chirimen";
-import WaterLevelSensor from "./grove-water-level-sensor.js";
+import WaterLevelSensor from "@chirimen/grove-water-level-sensor";
 
 const i2cAccess = await requestI2CAccess();
 
