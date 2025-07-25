@@ -3,16 +3,14 @@
 // Based from https://github.com/Seeed-Studio/Accelerometer_MMA7660/blob/master/MMA7660.cpp
 // Programmed by Masahito Inoue
 
-const ATTINY1_HIGH_ADDR = 0x78;
-const ATTINY2_LOW_ADDR = 0x77;
-const SENSORVALUE_MIN = 250;
-const SENSORVALUE_MAX = 255;
 const THRESHOLD = 100;
 
 class WaterLevelSensor {
+  // Since the addresses at the top and bottom of the sensor are different, initialize each address separately.
   constructor(i2cPort, slaveAddressLow, slaveAddressHigh) {
     this.i2cPort = i2cPort;
-    this.i2cSlave = null;
+    this.i2cSlaveLow = null;
+    this.i2cSlaveHigh = null;
     this.slaveAddressLow = slaveAddressLow;
     this.slaveAddressHigh = slaveAddressHigh;
   }
@@ -51,7 +49,6 @@ class WaterLevelSensor {
     for (let i = 0 ; i < 8; i++) {
       if (low_data[i] > THRESHOLD) {
         touch_val |= 1 << i;
-
       }
     }
     for (let i = 0 ; i < 12; i++) {
@@ -60,12 +57,14 @@ class WaterLevelSensor {
       }
     }
 
+    // Check if the least significant bit is 1.
     while (touch_val & 0x01)
     {
       trig_section++;
       touch_val >>= 1;
     }
 
+    // Since there are 20 sensor sections, multiply by 5 to convert to a percentage.
     const value = trig_section * 5;
 
     return value;
