@@ -5,13 +5,13 @@ const i2cAccess = await requestI2CAccess();
 
 const i2cPort = i2cAccess.ports.get(1);
 
-const WaterLevelSensor = new WaterLevelSensor(i2cPort, 0x77);
+const waterlevelsensor = new WaterLevelSensor(i2cPort, 0x77);
 
-await WaterLevelSensor.init();
+await waterlevelsensor.init();
 
 setInterval(async() => {
-    let high12SectionValue = await WaterLevelSensor.getHigh12SectionValue();
-    let low8SectionValue = await WaterLevelSensor.getLow8SectionValue();
+    let high12SectionValue = await waterlevelsensor.getHigh12SectionValue();
+    let low8SectionValue = await waterlevelsensor.getLow8SectionValue();
 
     console.dir(high12SectionValue);
     console.dir(low8SectionValue);
