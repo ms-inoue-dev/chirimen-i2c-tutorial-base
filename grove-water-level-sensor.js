@@ -10,41 +10,39 @@ const SENSORVALUE_MAX = 255;
 const THRESHOLD = 100;
 
 class WaterLevelSensor {
-  constructor(i2cPort, slaveAddress) {
+  constructor(i2cPort, slaveAddressLow, slaveAddressHigh) {
     this.i2cPort = i2cPort;
     this.i2cSlave = null;
-    this.slaveAddress = slaveAddress;
+    this.slaveAddressLow = slaveAddressLow;
+    this.slaveAddressHigh = slaveAddressHigh;
   }
 
   async init() {
-    this.i2cSlave = await this.i2cPort.open(this.slaveAddress);
+    this.i2cSlaveLow = await this.i2cPort.open(this.slaveAddressLow);
+    this.i2cSlaveHigh = await this.i2cPort.open(this.slaveAddressHigh);
   }
 
   async getHigh12SectionValue() {
-    if (this.i2cSlave == null) {
-      throw new Error("i2cSlave is not open yet.");
+    if (this.i2cSlaveHigh == null) {
+      throw new Error("i2cSlaveHigh is not open yet.");
     }
 
-    const high12SectionValue = await this.i2cSlave.readBytes(12);
+    const high12SectionValue = await this.i2cSlaveHigh.readBytes(12);
 
     return high12SectionValue;
   }
 
   async getLow8SectionValue() {
-    if (this.i2cSlave == null) {
-      throw new Error("i2cSlave is not open yet.");
+    if (this.i2cSlaveLow == null) {
+      throw new Error("i2cSlaveLow is not open yet.");
     }
 
-    const low8SectionValue = await this.i2cSlave.readBytes(8);
+    const low8SectionValue = await this.i2cSlaveLow.readBytes(8);
 
     return low8SectionValue;
   }
 
   async getWaterLevel() {
-    if (this.i2cSlave == null) {
-      throw new Error("i2cSlave is not open yet.");
-    }
-
     const high_data = await this.getHigh12SectionValue();
     const low_data = await this.getLow8SectionValue();
     let touch_val = 0;
