@@ -13,7 +13,10 @@ setInterval(async() => {
     let high12SectionValue = await waterlevelsensor.getHigh12SectionValue();
     let low8SectionValue = await waterlevelsensor.getLow8SectionValue();
 
+    let waterLevel = await waterlevelsensor.getWaterLevel();
+
     console.dir("high: " + high12SectionValue);
     console.dir("low: " + low8SectionValue);
+    console.dir("waterLevel: " + waterLevel + " %");
 
 }, 500);
