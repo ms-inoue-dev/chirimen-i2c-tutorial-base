@@ -1,22 +1,28 @@
 import {requestI2CAccess} from "chirimen";
-import WaterLevelSensor from "@chirimen/grove-water-level-sensor";
+import MMA7660 from "@chirimen/mma7660";
 
-const i2cAccess = await requestI2CAccess();
+async function main() {
 
-const i2cPort = i2cAccess.ports.get(1);
+    const i2cAccess = await requestI2CAccess();
 
-const waterlevelsensor = new WaterLevelSensor(i2cPort, 0x77, 0x78);
+    const i2cPort = i2cAccess.ports.get(1);
 
-await waterlevelsensor.init();
+    const mma7660 = new MMA7660(i2cPort, 0x4c);
 
-setInterval(async() => {
-    let high12SectionValue = await waterlevelsensor.getHigh12SectionValue();
-    let low8SectionValue = await waterlevelsensor.getLow8SectionValue();
+    await mma7660.init();
 
-    let waterLevel = await waterlevelsensor.getWaterLevel();
+    setInterval(async() => {
+        const XYZData = await mma7660.getXYZ();
+        const AccelerationData = await mma7660.getAcceleration();
 
-    console.dir("high: " + high12SectionValue);
-    console.dir("low: " + low8SectionValue);
-    console.dir("waterLevel: " + waterLevel + " %");
+        console.dir(`X =${  XYZData.X}`);
+        console.dir(`y =${  XYZData.Y}`);
+        console.dir(`z =${  XYZData.Z}`);
 
-}, 500);
+        console.dir(`accleration of X/Y/Z: ${  AccelerationData.X  } g/ ${  AccelerationData.Y  } g/ ${  AccelerationData.Z  } g`);
+
+    }, 500);
+
+}
+
+main();
